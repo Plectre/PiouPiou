@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">PiouPiou</string>
+    <string name="requette">Requette</string>
+    <string name="vitesseVent">KNOTS</string>
+    <string name="loading">Chargement ...</string>
+    <string name="author">By Plectre</string>
+    <string name="rosedesvents">roseDesVents</string>
+    <string name="title_activity_maps">Map Pioupiou</string>
+    <string name="desole">Desolé pas de coordonnées valides !</string>
+    <string name="timeOut">Time Out !</string>
+    <string name="url_pioupiou">https://pioupiou.fr/fr</string>
+</resources>
