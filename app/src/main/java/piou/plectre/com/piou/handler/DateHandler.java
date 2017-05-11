@@ -8,6 +8,8 @@ package piou.plectre.com.piou.handler;
 public class DateHandler {
 
     private String date;
+
+
     private String currentDay;
     private String currentTime;
 
@@ -17,19 +19,21 @@ public class DateHandler {
 
     }
 
-    public String getHeure (String date) {
-
-        currentTime = date.substring(11, 19);
-        return currentTime;
-    }
-
-    public String jour (String date) {
+    public String getCurrentDay() {
 
         String month = date.substring(5, 7);
         String day = date.substring(8, 10);
         String year = date.substring(0, 4);
 
-        String currentDay = day +"/"+month+"/"+year;
+        String currentDay = day + "/" + month + "/" + year;
         return currentDay;
     }
+
+    public String getHeure() {
+
+        currentTime = date.substring(11, 19);
+        return currentTime;
+    }
+
+
 }

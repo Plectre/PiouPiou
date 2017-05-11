@@ -20,8 +20,8 @@
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:padding="15dp"
-            android:textColor="@color/green"
             android:textAlignment="center"
+            android:textColor="@color/green"
             android:textSize="15sp" />
 
 
@@ -35,6 +35,7 @@
                 android:layout_width="155dp"
                 android:layout_height="155dp"
                 android:layout_gravity="center"
+                android:layout_margin="10dp"
                 android:alpha="0.4"
                 android:foreground="@drawable/rose_vents" />
 
@@ -49,20 +50,22 @@
 
         </FrameLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/background"
-            android:orientation="horizontal">
+
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:elevation="10dp"
-                android:text="Derniére maj :"
+                android:text="Derniére maj"
+                android:textStyle="italic"
+                android:backgroundTint="@color/colorPrimary"
                 android:textAlignment="center" />
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background"
+            android:orientation="horizontal">
             <TextView
                 android:id="@+id/tv_jour"
                 android:layout_width="match_parent"
@@ -88,10 +91,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_gravity="center"
-                android:padding="5dp"
                 android:layout_weight="1"
-                android:textColor="@color/green"
+                android:padding="5dp"
                 android:textAlignment="center"
+                android:textColor="@color/green"
                 android:textSize="@dimen/h2" />
 
 
@@ -99,31 +102,42 @@
                 android:id="@+id/tv_average"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:padding="10dp"
-                android:textColor="@color/green"
-                android:textAlignment="center"
                 android:layout_weight="1"
+                android:padding="10dp"
+                android:textAlignment="center"
+                android:textColor="@color/green"
                 android:textSize="@dimen/h2" />
         </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/tv_bandeau_coor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/longClick"
+                android:background="@color/footer"
+                android:textAlignment="center" />
+
 
         <LinearLayout
             android:id="@+id/ll_lat_lon"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_weight="2"
             android:background="@color/background"
             android:clickable="true"
-            android:elevation="10dp"
+            android:elevation="20dp"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="start"
                 android:padding="5dp"
-                android:text="Lat:" />
+                android:text="Lat:"
+                android:textAlignment="center" />
 
             <TextView
                 android:id="@+id/tvLat"
@@ -133,12 +147,12 @@
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:padding="5dp"
-                android:textColor="@color/green"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/green" />
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="start"
                 android:padding="5dp"
@@ -147,7 +161,7 @@
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="end"
                 android:maxLines="1"
@@ -158,22 +172,23 @@
             <TextView
                 android:id="@+id/tvLon"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1.5"
                 android:maxLines="1"
                 android:padding="5dp"
-                android:textColor="@color/green"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/green" />
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="start"
                 android:padding="5dp"
                 android:text="°E" />
 
         </LinearLayout>
+
     </LinearLayout>
 
     <ListView

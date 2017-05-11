@@ -58,16 +58,17 @@ public class ApiRequestId {
                         String date = mesures.getString("date");
 
                         // Appel de la classe qui reformate les dates en francais
+                        // on passe la "date" au constructeur
                         DateHandler dateHandler = new DateHandler(date);
-                        String currentTime = dateHandler.getHeure(date);
-                        String currentDay = dateHandler.jour(date);
+                        String currentTime = dateHandler.getHeure();
+                        String currentDay = dateHandler.getCurrentDay();
 
 
                         if (wind_heading == 0) {
                             wind_heading = 360;
                         }
                         name = meta.getString("name");
-//                      String id = data.getString("id");
+
                         callback.onSuccess(wind_heading,
                                 wind_average,
                                 name,

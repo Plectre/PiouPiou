@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 public class LauncherActivity extends AppCompatActivity {
 
+    public String URL = "https://pioupiou.fr/fr";
     public TextView tv_url;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +22,7 @@ public class LauncherActivity extends AppCompatActivity {
         tv_url.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String requette = "https://pioupiou.fr/fr";
+                String requette = URL;
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(requette));
                 startActivity(intent);
             }
@@ -30,7 +31,7 @@ public class LauncherActivity extends AppCompatActivity {
         Thread chrono = new Thread(){
             public void run(){
                 try{
-                    sleep(40);
+                    sleep(4000);
                     Intent intent = new Intent(LauncherActivity.this, MainActivity.class);
                     startActivity(intent);
                 }catch(InterruptedException e) {

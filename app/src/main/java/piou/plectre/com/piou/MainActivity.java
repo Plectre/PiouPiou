@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     TextView tvHeure;
     TextView tvJour;
     LinearLayout coord;
+    TextView bandeauCoord;
 
     private RequestQueue queue;
     private ApiRequestId request;
@@ -49,19 +50,27 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         coord = (LinearLayout) findViewById(R.id.ll_lat_lon);
+
         tvLat = (TextView) findViewById(R.id.tvLat);
         tvLon = (TextView) findViewById(R.id.tvLon);
         tvHeure = (TextView) findViewById(R.id.tv_heure);
         tvJour = (TextView) findViewById(R.id.tv_jour);
         tvHeading = (TextView) findViewById(R.id.tv_Heading);
         tvName = (TextView) findViewById(R.id.tvName);
+        bandeauCoord = (TextView) findViewById(R.id.tv_bandeau_coor);
         tvWindAverage = (TextView) findViewById(R.id.tv_average);
+
         ivArrow = (ImageView) findViewById(R.id.ivArrow);
         lvNames = (ListView) findViewById(R.id.lvNames);
         queue = MySingleton.getInstance(this).getRequestQueue();
+
         request = new ApiRequestId(queue, this);
         requestIds = new ApiRequestIdS(queue, this);
+
+        bandeauCoord.setVisibility(View.INVISIBLE);
+        coord.setVisibility(View.INVISIBLE);
 
         /* Requette passée à la class ApiRequestIds
            qui recupére tous les piou avec state à on
@@ -133,28 +142,16 @@ public class MainActivity extends AppCompatActivity {
         coord.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                String lat = (String) tvLat.getText();
-                String lon = (String) tvLon.getText();
-
-                // Parse les String en double
-                double dbLat = Double.parseDouble(lat);
-                double dbLon = Double.parseDouble(lon);
-
-                if (!lat.equals("0.0") && !lat.equals("")
-                        && !lon.equals("0.0")
-                        && !lon.equals("")
-                        && !lon.equals(null)) {
-                    Intent intent = new Intent(getBaseContext(), MapsActivity.class);
-                    intent.putExtra("lat", dbLat);
-                    intent.putExtra("lon", dbLon);
-                    intent.putExtra("name", name);
-                    intent.putExtra("heading", winHeading);
-                    intent.putExtra("windAverage", windAverage);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(getBaseContext(), R.string.desole, Toast.LENGTH_SHORT).show();
-                }
+                clicLongCoord();
                 return true;
+            }
+        });
+
+        bandeauCoord.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                clicLongCoord();
+                return false;
             }
         });
 
@@ -186,6 +183,8 @@ public class MainActivity extends AppCompatActivity {
                 tvLon.setText(String.valueOf(longitude));
 
                 Rotation(pWinHeading);
+                coord.setVisibility(View.VISIBLE);
+                bandeauCoord.setVisibility(View.VISIBLE);
 
             }
 
@@ -223,6 +222,30 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         chrono.start();
+    }
+
+    public void clicLongCoord() {
+        String lat = (String) tvLat.getText();
+        String lon = (String) tvLon.getText();
+
+        // Parse les String en double
+        double dbLat = Double.parseDouble(lat);
+        double dbLon = Double.parseDouble(lon);
+
+        if (!lat.equals("0.0") && !lat.equals("")
+                && !lon.equals("0.0")
+                && !lon.equals("")
+                && !lon.equals(null)) {
+            Intent intent = new Intent(getBaseContext(), MapsActivity.class);
+            intent.putExtra("lat", dbLat);
+            intent.putExtra("lon", dbLon);
+            intent.putExtra("name", name);
+            intent.putExtra("heading", winHeading);
+            intent.putExtra("windAverage", windAverage);
+            startActivity(intent);
+        } else {
+            Toast.makeText(getBaseContext(), R.string.desole, Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
