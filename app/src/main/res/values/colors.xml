@@ -4,9 +4,10 @@
     <color name="colorPrimaryDark">#0097A7</color>
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#757575</color>
-    <color name="background">#a895e6c0</color>
-    <color name="colorAccent">#a87af152</color>
-    <color name="header">#e4f9f9</color>
+    <color name="background">#d8f6f9</color>
+    <color name="colorAccent">#1abfcf</color>
+    <color name="header">#fafcfc</color>
+    <color name="rose_des_vents">#d8f6f9</color>
     <color name="footer">#b3d4d4</color>
     <color name="green">#187809</color>
 </resources>

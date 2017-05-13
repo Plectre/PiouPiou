@@ -1,9 +1,7 @@
 package piou.plectre.com.piou.request;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.util.Log;
-import android.widget.AutoCompleteTextView;
 
 import com.android.volley.NetworkError;
 import com.android.volley.Request;
@@ -17,9 +15,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import java.text.ParseException;
 import java.util.HashMap;
+
+import piou.plectre.com.piou.handler.DateHandler;
 
 
 /**
@@ -31,12 +30,11 @@ public class ApiRequestIdS {
     private Context context;
 
 
-
     public ApiRequestIdS(RequestQueue queue, Context context) {
 
-            this.queue = queue;
-            this.context = context;
-        }
+        this.queue = queue;
+        this.context = context;
+    }
 
     public void checkIdsPiou(final String id, final CheckPiouIdsCallbackNames callback) {
 
@@ -53,7 +51,6 @@ public class ApiRequestIdS {
                     try {
                         JSONArray data = response.getJSONArray("data");
                         int dataLenght = data.length();
-                        //ArrayList<String> names = new ArrayList<>();
                         HashMap<String, String> map = new HashMap<>();
                         for (int i = 0; i < dataLenght; i++) {
 
@@ -61,23 +58,39 @@ public class ApiRequestIdS {
                             int id = jsonObject.getInt("id");
                             JSONObject status = jsonObject.getJSONObject("status");
                             JSONObject meta = jsonObject.getJSONObject("meta");
+                            JSONObject mesures = jsonObject.getJSONObject("measurements");
+
                             String name = meta.getString("name");
                             String state = status.getString("state");
                             String strId = String.valueOf(id);
+                            String date = mesures.getString("date");
 
+                            // on verifie l'etat du piou si actif
                             if (state.equals("on")) {
-                                //Log.i("APP", state + " " +strId + " "+ name);
-                                //names.add(String.valueOf(id));
-                                map.put("_"+strId+"_", name);
+                                // on ecarte les dates qui valent null
+                                if (!date.equals("null")) {
+                                    // appel de la methode qui compare les dates et renvoi true si
+                                    // celles-ci sont identiques
+                                    DateHandler dh = new DateHandler(date);
+                                    boolean compare = dh.compareYear();
 
+                                    if (compare == true) {
+                                        // on verifie si l'etat est actif
+//                                    if (state.equals("on")) {
+                                        map.put("_" + strId + "_", name);
+
+                                    }
+                                }
                             }
 
                         }
                         callback.onSuccessIds(map);
-                        //callback.onSuccessIds(names);
 
                     } catch (JSONException e) {
                         Log.e("APP", "EXCEPTION : " + e);
+                        e.printStackTrace();
+                    } catch (ParseException e) {
+                        Log.e("APP", "Date.parse execption" + (e));
                         e.printStackTrace();
                     }
                 } else {
@@ -103,6 +116,7 @@ public class ApiRequestIdS {
     public interface CheckPiouIdsCallbackNames {
 
         void onSuccessIds(HashMap<String, String> idS);
+
         void onError(String message);
 
     }

@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 List<HashMap<String, String>> listItem = new ArrayList<>();
 
                 SimpleAdapter sAdapter = new SimpleAdapter(MainActivity.this, listItem, R.layout.list_items,
-                        new String[]{"First Line", "Second Line"},
+                        new String[]{"First Line", "Second Line", "Favori"},
                         new int[]{R.id.item_1, R.id.item_2});
 
                 Iterator it = names.entrySet().iterator();
@@ -154,6 +154,13 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
 
 
     }

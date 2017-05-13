@@ -31,7 +31,7 @@ public class LauncherActivity extends AppCompatActivity {
         Thread chrono = new Thread(){
             public void run(){
                 try{
-                    sleep(4000);
+                    sleep(4);
                     Intent intent = new Intent(LauncherActivity.this, MainActivity.class);
                     startActivity(intent);
                 }catch(InterruptedException e) {

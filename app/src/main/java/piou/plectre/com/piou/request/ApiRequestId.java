@@ -57,11 +57,12 @@ public class ApiRequestId {
 
                         String date = mesures.getString("date");
 
+
                         // Appel de la classe qui reformate les dates en francais
                         // on passe la "date" au constructeur
                         DateHandler dateHandler = new DateHandler(date);
-                        String currentTime = dateHandler.getHeure();
-                        String currentDay = dateHandler.getCurrentDay();
+                        String currentTime = dateHandler.getPiouHeure();
+                        String currentDay = dateHandler.getPiouDay();
 
 
                         if (wind_heading == 0) {
@@ -76,7 +77,6 @@ public class ApiRequestId {
                                 longitude,
                                 currentTime,
                                 currentDay);
-
 
                     } catch (JSONException e) {
                         Log.e("APP", "EXCEPTION : " + e);
