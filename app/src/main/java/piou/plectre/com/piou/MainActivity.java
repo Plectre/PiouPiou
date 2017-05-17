@@ -102,10 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
                 lvNames.setAdapter(sAdapter);
-//                ArrayAdapter<String> adapter = new ArrayAdapter<>(MainActivity.this,
-//                        android.R.layout.simple_list_item_1, names);
-//
-//                lvNames.setAdapter(adapter);
+
 
                 lvNames.setOnItemClickListener(lvNames_listener);
 
@@ -116,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
             AdapterView.OnItemClickListener lvNames_listener = new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
 
                     Object ObjectId = parent.getItemAtPosition(position);
                     String strId = String.valueOf(ObjectId);
@@ -154,7 +152,6 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-
 
     }
 
@@ -217,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
                         cp = 0;
                     }
                     try {
-                        sleep(2);
+                        sleep(4);
                         cp+=1;
                         ivArrow.setRotation(cp);
                     } catch (InterruptedException e) {
@@ -232,6 +229,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clicLongCoord() {
+
         String lat = (String) tvLat.getText();
         String lon = (String) tvLon.getText();
 
