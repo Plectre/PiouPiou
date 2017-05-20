@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.util.HashMap;
 
+import piou.plectre.com.piou.handler.CompareCoord;
 import piou.plectre.com.piou.handler.DateHandler;
 
 
@@ -27,13 +28,20 @@ import piou.plectre.com.piou.handler.DateHandler;
 
 public class ApiRequestIdS {
     private RequestQueue queue;
-    private Context context;
+    private double latitude;
+    private double longitude;
 
+    public ApiRequestIdS() {
+
+    }
+
+    public double getLatitude(){return latitude;}
+    public double getLongitude(){return longitude;}
 
     public ApiRequestIdS(RequestQueue queue, Context context) {
 
         this.queue = queue;
-        this.context = context;
+
     }
 
     public void checkIdsPiou(final String id, final CheckPiouIdsCallbackNames callback) {
@@ -59,11 +67,15 @@ public class ApiRequestIdS {
                             JSONObject status = jsonObject.getJSONObject("status");
                             JSONObject meta = jsonObject.getJSONObject("meta");
                             JSONObject mesures = jsonObject.getJSONObject("measurements");
+                            JSONObject location = jsonObject.getJSONObject("location");
 
                             String name = meta.getString("name");
                             String state = status.getString("state");
                             String strId = String.valueOf(id);
                             String date = mesures.getString("date");
+                            latitude = location.getDouble("latitude");
+                            longitude = location.getDouble("longitude");
+
 
                             // on verifie l'etat du piou si actif
                             if (state.equals("on")) {
@@ -75,9 +87,15 @@ public class ApiRequestIdS {
                                     boolean compare = dh.compareYear();
 
                                     if (compare == true) {
-                                        // on verifie si l'etat est actif
-//                                    if (state.equals("on")) {
-                                        map.put("_" + strId + "_", name);
+
+                                        CompareCoord cc = new CompareCoord();
+                                        cc.recupCoorPiou(latitude, longitude);
+                                         int distance = cc.Compare();
+
+                                        //Log.i("APP", String.valueOf(distance));
+                                        // Ajout des Id et name à la liste
+                                        map.put("_" + strId + "_"+"_"+distance+"_", name);
+                                        //map.put("_"+String.valueOf(distance)+"_", name);
 
                                     }
                                 }

@@ -114,17 +114,20 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
+                    // Decouper la chaine et recuperer l'id du pioupiou
+                    // decouper avec "_" splitId[1] = id : splitId[3] = distance
                     Object ObjectId = parent.getItemAtPosition(position);
                     String strId = String.valueOf(ObjectId);
+
                     String[] splitId = strId.split("_");
 
-                    // Decouper la chaine et recuperer l'id du pioupiou
+                    Log.i("APP", String.valueOf(splitId[3]));
 
                     // Envoyer la requette à l'api pioupiou
                     Request(splitId[1]);
+
                     //Toast.makeText(getBaseContext(), splitId[1], Toast.LENGTH_SHORT).show();
-                    Log.i("APP", strId);
+                    //Log.i("APP", strId);
                 }
             };
 
