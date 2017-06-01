@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.Toast;
 
 import piou.plectre.com.piou.handler.CompareCoord;
 
@@ -22,17 +23,6 @@ public class CheckPosition extends Service implements LocationListener {
     private Context context;
     private boolean inBound = false;
 
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-
-    public CheckPosition() {
-    }
 
     public CheckPosition(Context context) {
         this.context = context.getApplicationContext();
@@ -49,8 +39,9 @@ public class CheckPosition extends Service implements LocationListener {
             CompareCoord cc = new CompareCoord();
             cc.recupCoorClient(latitude, longitude);
             inBound = true;
+
         } else {
-            return;
+
         }
     }
 
@@ -66,7 +57,7 @@ public class CheckPosition extends Service implements LocationListener {
 
     @Override
     public void onProviderDisabled(String provider) {
-
+        Toast.makeText(context, "La localisation n'est pas activée ;=) ", Toast.LENGTH_LONG).show();
     }
 
     @Nullable

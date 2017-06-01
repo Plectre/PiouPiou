@@ -1,27 +1,18 @@
 package piou.plectre.com.piou.handler;
 
-import piou.plectre.com.piou.request.ApiRequestIdS;
 
 /**
  * Created by El Di@blo on 20/05/2017.
+ * calcul en km de la distance separant les deux coordonnées
  */
 
 public class CompareCoord {
 
-    private double clientLatitude = 44.0020;
-    private double clientLongitude = -0.2323;
+    private double clientLatitude;
+    private double clientLongitude;
     private double piouLatitude;
     private double piouLongitude;
-    private double distance;
 
-
-    public CompareCoord() {
-
-        ApiRequestIdS api = new ApiRequestIdS();
-        this.piouLatitude = api.getLatitude();
-        this.piouLongitude = api.getLongitude();
-
-    }
 
     public void recupCoorPiou(double latitude, double longitude) {
 
@@ -37,25 +28,30 @@ public class CompareCoord {
 
     }
 
-    private double convertRad(double input) {
-
-        return (Math.PI * input / 180);
-    }
-
-    public int Compare() {
-        double R = 637800;
+    /**
+     * Fonction qui calcule la disatance entre le piou
+     * et le client
+     */
+    public String Compare() {
 
         // convertion en radiants
-        double lat_2 = convertRad(clientLatitude);
-        double lon_2 = convertRad(clientLongitude);
-        double lat_1 = convertRad(piouLatitude);
-        double lon_1 = convertRad(piouLongitude);
+        double lat_1 = Math.PI * (clientLatitude / 180);
+        double lon_1 = Math.PI * (clientLongitude / 180);
+        double lat_2 = Math.PI * (piouLatitude / 180);
+        double lon_2 = Math.PI * (piouLongitude / 180);
 
-       double d = R * (Math.PI / 2 - Math.asin(Math.sin(lat_2) * Math.sin(lat_1) +
-                Math.cos(lon_2 - lon_1) *
-                        Math.cos(lat_2) * Math.cos(lat_1)));
+        double theta = clientLongitude - piouLongitude;
+        double rtheta = Math.PI * theta / 180;
 
-        int distance = (int) d;
-        return Math.round(distance) / 100;
+
+        double d = Math.sin(lat_1) * Math.sin(lat_2) + Math.cos(lon_1) * Math.cos(lon_2) * Math.cos(rtheta);
+        d = Math.acos(d);
+        d = Math.ceil(d * 180 / Math.PI);
+        d = d * 60 * 1.1515;
+        int di = (int) d;
+        String distance = String.valueOf(di);
+        return distance;
+
     }
 }
+

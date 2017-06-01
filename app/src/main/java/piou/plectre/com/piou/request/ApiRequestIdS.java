@@ -2,6 +2,7 @@ package piou.plectre.com.piou.request;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
 
 import com.android.volley.NetworkError;
 import com.android.volley.Request;
@@ -18,6 +19,8 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.util.HashMap;
 
+import piou.plectre.com.piou.LauncherActivity;
+import piou.plectre.com.piou.handler.ClassArray;
 import piou.plectre.com.piou.handler.CompareCoord;
 import piou.plectre.com.piou.handler.DateHandler;
 
@@ -31,12 +34,14 @@ public class ApiRequestIdS {
     private double latitude;
     private double longitude;
 
-    public ApiRequestIdS() {
 
+    public double getLatitude() {
+        return latitude;
     }
 
-    public double getLatitude(){return latitude;}
-    public double getLongitude(){return longitude;}
+    public double getLongitude() {
+        return longitude;
+    }
 
     public ApiRequestIdS(RequestQueue queue, Context context) {
 
@@ -55,7 +60,7 @@ public class ApiRequestIdS {
                 // Check si il y'a une reponse du serveur
                 if (response.length() > 0) {
 
-                    Log.d("APP", response.toString());
+                    //Log.d("APP", response.toString());
                     try {
                         JSONArray data = response.getJSONArray("data");
                         int dataLenght = data.length();
@@ -69,7 +74,7 @@ public class ApiRequestIdS {
                             JSONObject mesures = jsonObject.getJSONObject("measurements");
                             JSONObject location = jsonObject.getJSONObject("location");
 
-                            String name = meta.getString("name");
+
                             String state = status.getString("state");
                             String strId = String.valueOf(id);
                             String date = mesures.getString("date");
@@ -81,6 +86,7 @@ public class ApiRequestIdS {
                             if (state.equals("on")) {
                                 // on ecarte les dates qui valent null
                                 if (!date.equals("null")) {
+
                                     // appel de la methode qui compare les dates et renvoi true si
                                     // celles-ci sont identiques
                                     DateHandler dh = new DateHandler(date);
@@ -90,18 +96,22 @@ public class ApiRequestIdS {
 
                                         CompareCoord cc = new CompareCoord();
                                         cc.recupCoorPiou(latitude, longitude);
-                                         int distance = cc.Compare();
+                                        String distance = cc.Compare();
+                                        String name = meta.getString("name");
 
-                                        //Log.i("APP", String.valueOf(distance));
                                         // Ajout des Id et name à la liste
-                                        map.put("_" + strId + "_"+"_"+distance+"_", name);
-                                        //map.put("_"+String.valueOf(distance)+"_", name);
-
+                                        map.put("_" + strId + "_" + "_" + distance + "_", name);
+                                        //Log.i("APP", String.valueOf(map)+"\n");
+                                        //map.put("_" + String.valueOf(distance) + "_", name);
                                     }
+
                                 }
                             }
 
                         }
+
+                        // Envoi du map pour classement
+
                         callback.onSuccessIds(map);
 
                     } catch (JSONException e) {
@@ -127,6 +137,7 @@ public class ApiRequestIdS {
             }
         });
         queue.add(request);
+
     }
 
 
