@@ -40,9 +40,9 @@ public class DateHandler {
             return false;
         }
 
-        Log.i("APP", strCurrentDate);
-        Log.i("APP", piouDayFinal);
-        Log.i("APP", (String.valueOf(retourDate)));
+//        Log.i("APP", strCurrentDate);
+//        Log.i("APP", piouDayFinal);
+//        Log.i("APP", (String.valueOf(retourDate)));
         return true;
     }
 

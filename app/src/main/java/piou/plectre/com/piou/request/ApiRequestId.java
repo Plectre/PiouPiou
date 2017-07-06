@@ -50,6 +50,8 @@ public class ApiRequestId {
                         JSONObject meta = data.getJSONObject("meta");
                         JSONObject mesures = data.getJSONObject("measurements");
                         JSONObject location = data.getJSONObject("location");
+
+                        name = meta.getString("name");
                         double latitude = location.getDouble("latitude");
                         double longitude = location.getDouble("longitude");
                         double wind_average = Math.floor(mesures.getLong("wind_speed_avg") / 1.852);// Km/h ----> Knot
@@ -68,7 +70,7 @@ public class ApiRequestId {
                         if (wind_heading == 0) {
                             wind_heading = 360;
                         }
-                        name = meta.getString("name");
+                        //name = meta.getString("name");
 
                         callback.onSuccess(wind_heading,
                                 wind_average,

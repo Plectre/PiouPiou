@@ -27,17 +27,17 @@ import piou.plectre.com.piou.request.ApiRequestIdS;
 public class MainActivity extends AppCompatActivity {
 
 
-    TextView tvWindAverage;
-    TextView tvHeading;
-    TextView tvName;
-    ImageView ivArrow;
-    ListView lvNames;
-    TextView tvLat;
-    TextView tvLon;
-    TextView tvHeure;
-    TextView tvJour;
-    LinearLayout coord;
-    TextView bandeauCoord;
+    private TextView tvWindAverage;
+    private TextView tvHeading;
+    private TextView tvName;
+    private ImageView ivArrow;
+    private ListView lvNames;
+    private TextView tvLat;
+    private TextView tvLon;
+    private TextView tvHeure;
+    private TextView tvJour;
+    private LinearLayout coord;
+    private TextView bandeauCoord;
 
     private RequestQueue queue;
     private ApiRequestId request;
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         coord.setVisibility(View.INVISIBLE);
 
         /* Requette passée à la class ApiRequestIds
-           qui recupére tous les piou avec state à on
+           qui recupére tous les piou avec state à "on" et date du jour
            puis instancie la méthode CheckPiouIdsCallback qui permet d'implementer onSuccess et
            onError
          */
@@ -83,19 +83,21 @@ public class MainActivity extends AppCompatActivity {
             // Callback de onSuccessNames
             @Override
             public void onSuccessIds(HashMap<String, String> names) {
+
                 List<HashMap<String, String>> listItem = new ArrayList<>();
 
                 SimpleAdapter sAdapter = new SimpleAdapter(MainActivity.this, listItem, R.layout.list_items,
-                        new String[]{"First Line", "Second Line", "Favori"},
-                        new int[]{R.id.item_1, R.id.item_2});
+                        new String[]{"First Line", "Second Line", "Kilometre"},
+                        new int[]{R.id.item_1, R.id.item_2, R.id.item_3});
 
                 Iterator it = names.entrySet().iterator();
 
                 while (it.hasNext()) {
                     HashMap<String, String> result = new HashMap<>();
                     Map.Entry pair = (Map.Entry) it.next();
-                    result.put("Second Line", pair.getValue().toString());
                     result.put("First Line", pair.getKey().toString());
+                    result.put("Second Line", pair.getValue().toString());
+                    //result.put("Kilometre", pair.getValue().toString());
 
 
                     listItem.add(result);
@@ -114,16 +116,20 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
+                    // Decouper la chaine et recuperer l'id du pioupiou
+                    // decouper avec "_" splitId[1] = id : splitId[3] = distance
                     Object ObjectId = parent.getItemAtPosition(position);
                     String strId = String.valueOf(ObjectId);
+
                     String[] splitId = strId.split("_");
 
-                    // Decouper la chaine et recuperer l'id du pioupiou
+                    //Log.i("APP", "distance : "+ String.valueOf(splitId[3]));
+                    //Log.i("APP", "id : " + String.valueOf(splitId[1]));
 
                     // Envoyer la requette à l'api pioupiou
                     Request(splitId[1]);
-                    //Toast.makeText(getBaseContext(), splitId[1], Toast.LENGTH_SHORT).show();
+                    String distance = (splitId[3]);
+                    Toast.makeText(getBaseContext(), String.valueOf(distance)+" kms à vol de pioupiou ;=)", Toast.LENGTH_SHORT).show();
                     Log.i("APP", strId);
                 }
             };
@@ -182,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
                 tvHeading.setText("Vent du : " + String.valueOf(pWinHeading) + "°");
                 tvWindAverage.setText("Vitesse : " + String.valueOf(pWindAverage) + " " +
                         getResources().getString(R.string.vitesseVent));
-                tvName.setText(pName);
+                tvName.setText(pName.toUpperCase());
                 tvLat.setText(String.valueOf(latitude));
                 tvLon.setText(String.valueOf(longitude));
 
@@ -214,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
                         cp = 0;
                     }
                     try {
-                        sleep(4);
+                        sleep(1);
                         cp+=1;
                         ivArrow.setRotation(cp);
                     } catch (InterruptedException e) {
@@ -228,6 +234,8 @@ public class MainActivity extends AppCompatActivity {
         chrono.start();
     }
 
+
+    // demmarre Google maps
     public void clicLongCoord() {
 
         String lat = (String) tvLat.getText();
